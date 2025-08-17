@@ -1,373 +1,90 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="el">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Center Car — Εκτελωνισμοί (Demo)</title>
-<style>
-  :root { --bg:#0b0c10; --card:#ffffff; --primary:#1f7aec; --muted:#6b7280; --text:#111827; }
-  *{box-sizing:border-box}
-  body{margin:0;background:#f5f7fb;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-  header{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid #e5e7eb;padding:12px 14px;display:flex;gap:10px;align-items:center;justify-content:space-between}
-  header .title{font-weight:700}
-  header .actions button{border:none;background:#111827;color:#fff;border-radius:10px;padding:10px 14px;font-weight:600}
-  main{padding:14px;max-width:1000px;margin:0 auto}
-  .tabs{display:flex;gap:8px;margin:6px 0 12px 0}
-  .tabs button{flex:1;border:1px solid #e5e7eb;border-radius:10px;background:#fff;padding:12px;font-weight:600;color:#374151}
-  .tabs button.active{background:#1f7aec;color:#fff;border-color:#1f7aec}
-  .searchbar{display:flex;gap:8px;margin:8px 0 16px 0}
-  .searchbar input{flex:1;padding:12px;border:1px solid #e5e7eb;border-radius:10px}
-  .grid{display:grid;grid-template-columns:1fr;gap:12px}
-  @media(min-width:980px){ .grid{grid-template-columns:1.1fr 1fr} }
-  .card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:14px}
-  .card h3{margin:0 0 10px 0}
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .form-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-  .field{display:flex;flex-direction:column;gap:6px}
-  .field label{font-size:12px;color:#6b7280}
-  .field input,.field select{padding:12px;border:1px solid #e5e7eb;border-radius:10px}
-  .chips{display:flex;flex-wrap:wrap;gap:8px}
-  .chip{border:1px solid #e5e7eb;border-radius:999px;padding:8px 12px;background:#fff;cursor:pointer;color:#374151}
-  .chip.active{background:#111827;color:#fff;border-color:#111827}
-  .btns{display:flex;gap:8px;flex-wrap:wrap}
-  .btn{border:none;border-radius:10px;padding:12px 14px;font-weight:700;cursor:pointer}
-  .btn.primary{background:#1f7aec;color:#fff}
-  .btn.outline{background:#fff;color:#111827;border:1px solid #e5e7eb}
-  .btn.danger{background:#ef4444;color:#fff}
-  .list .item{border:1px solid #e5e7eb;border-radius:12px;padding:12px;display:flex;gap:10px;align-items:center;justify-content:space-between;background:#fff}
-  .badge{font-size:12px;border:1px solid #e5e7eb;border-radius:999px;padding:4px 8px;color:#374151;background:#fff}
-  .badge.solid{background:#10b981;border-color:#10b981;color:#fff}
-  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-  small.muted{color:#6b7280}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Center Car — Εκτελωνισμοί (Demo)</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .car-item { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; }
+    .car-header { display: flex; justify-content: space-between; align-items: center; }
+    .btn { padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer; }
+    .btn-edit { background: #007bff; color: white; }
+    .btn-delete { background: #dc3545; color: white; }
+  </style>
 </head>
 <body>
-<header>
-  <div class="title">Center Car — Εκτελωνισμοί (Demo)</div>
-  <div class="actions">
-    <button id="addQuick">+ Νέο Αυτοκίνητο</button>
-  </div>
-</header>
-<main>
-  <div class="tabs">
-    <button class="tab active" data-tab="all">Όλα</button>
-    <button class="tab" data-tab="open">Ανοιχτά</button>
-    <button class="tab" data-tab="locked">Κλειδωμένα</button>
-  </div>
-  <div class="searchbar">
-    <input id="search" placeholder="Αναζήτηση: Μάρκα, Μοντέλο, VIN, Σχόλια..." />
-  </div>
+  <h2>Center Car — Εκτελωνισμοί (Demo)</h2>
 
-  <div class="grid">
-    <section class="card">
-      <h3>Καταχώριση Αυτοκινήτου</h3>
-      <div class="form-row">
-        <div class="field">
-          <label>Μάρκα / Μοντέλο</label>
-          <input id="makeModel" placeholder="π.χ. BMW M440d" />
-        </div>
-        <div class="field">
-          <label>VIN (Αρ. Πλαισίου)</label>
-          <input id="vin" placeholder="π.χ. WBA13..." />
-        </div>
-      </div>
-      <div class="form-row3" style="margin-top:10px">
-        <div class="field">
-          <label>Έτος 1ης Άδειας</label>
-          <input id="firstReg" type="date" />
-        </div>
-        <div class="field">
-          <label>Κυβικά (cc)</label>
-          <input id="cc" type="number" placeholder="π.χ. 1995" />
-        </div>
-        <div class="field">
-          <label>Euro</label>
-          <select id="euro">
-            <option>Euro 6</option><option>Euro 5</option><option>Euro 4</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row3" style="margin-top:10px">
-        <div class="field">
-          <label>CO₂ (V7)</label>
-          <input id="co2" type="number" placeholder="π.χ. 129" />
-        </div>
-        <div class="field">
-          <label>Τιμή Αγοράς (€)</label>
-          <input id="purchase" type="number" placeholder="π.χ. 49990" />
-        </div>
-        <div class="field">
-          <label>Χιλιόμετρα</label>
-          <input id="km" type="number" placeholder="π.χ. 70000" />
-        </div>
-      </div>
-      <div class="form-row" style="margin-top:10px">
-        <div class="field">
-          <label>Παράγραφος 25α</label>
-          <select id="para"><option value="yes">Ναι (χωρίς ΦΠΑ)</option><option value="no">Όχι</option></select>
-        </div>
-        <div class="field">
-          <label>Κιβώτιο</label>
-          <select id="gear"><option>Αυτόματο</option><option>Χειροκίνητο</option></select>
-        </div>
-      </div>
+  <div id="car-list"></div>
 
-      <div class="field" style="margin-top:10px">
-        <label>Υβριδισμός</label>
-        <div class="chips" id="hybridChips">
-          <div class="chip" data-h="none">Μη υβριδικό</div>
-          <div class="chip" data-h="mhev">Mild Hybrid</div>
-          <div class="chip" data-h="phev">Plug‑in Hybrid</div>
-        </div>
-      </div>
+  <script>
+    let cars = [
+      {
+        model: "BMW M440d xDrive Coupé",
+        status: "Ανοιχτό",
+        euro: "Euro 6",
+        co2: "139 g/km",
+        para: "25a",
+        vin: "WBA1TEST123456789",
+        km: "70000",
+        price: "49.990 €",
+        teloneio: "8.500 €"
+      },
+      {
+        model: "Peugeot 3008 1.5 BlueHDi",
+        status: "Κλειδωμένο",
+        euro: "Euro 6",
+        co2: "130 g/km",
+        para: "25a",
+        vin: "VF3TEST9876543210",
+        km: "67000",
+        price: "13.000 €",
+        teloneio: "4.500 €"
+      }
+    ];
 
-      <div class="field" style="margin-top:10px">
-        <label>Εξοπλισμός</label>
-        <div class="chips" id="extras">
-          <div class="chip" data-x="auto">Αυτόματο</div>
-          <div class="chip" data-x="heated">Θερμαινόμενα</div>
-          <div class="chip" data-x="fog">Προβολάκια</div>
-          <div class="chip" data-x="navi">Navi</div>
-          <div class="chip" data-x="park">Parktronic</div>
-          <div class="chip" data-x="leather">Δερμάτινα</div>
-          <div class="chip" data-x="roof">Οροφή</div>
-          <div class="chip" data-x="alloys">Ζάντες</div>
-          <div class="chip" data-x="metallic">Μεταλλικό</div>
-          <div class="chip" data-x="rain">Αισθητήρες Βροχής</div>
-          <div class="chip" data-x="cruise">Cruise Control</div>
-          <div class="chip" data-x="hud">Head‑Up Display</div>
-          <div class="chip" data-x="camera">Κάμερα Οπισθοπορείας</div>
-        </div>
-      </div>
-
-      <div class="form-row" style="margin-top:10px">
-        <div class="field">
-          <label>Εκτίμηση Τελωνείου (μόνο τελωνείο, χωρίς ΕΦΚ)</label>
-          <input id="estCustoms" placeholder="Πατήστε Υπολόγισε" readonly />
-        </div>
-        <div class="field">
-          <label>Κλειδωμένο Τελωνείο (τελικό)</label>
-          <input id="lockedCustoms" type="number" placeholder="π.χ. 8500" />
-        </div>
-      </div>
-
-      <div class="btns" style="margin-top:12px">
-        <button class="btn outline" id="estimate">Υπολόγισε</button>
-        <button class="btn primary" id="savePerm">Αποθήκευση (Μόνιμα)</button>
-        <button class="btn" id="saveDraft">Πρόχειρο</button>
-        <button class="btn danger" id="resetForm">Καθαρισμός</button>
-      </div>
-      <small class="muted">Demo υπολογισμός: ενδεικτικός — η τελική λογική σου θα συνδεθεί στο production.</small>
-    </section>
-
-    <section class="card">
-      <h3>Λίστα Οχημάτων</h3>
-      <div class="list" id="list"></div>
-    </section>
-  </div>
-</main>
-
-<script>
-// --- State & helpers ---
-const draft = []; // session-only
-const KEY = "cc_customs_app_v1";
-
-const $ = sel => document.querySelector(sel);
-const $$ = sel => Array.from(document.querySelectorAll(sel));
-
-function loadPerm(){ try{ return JSON.parse(localStorage.getItem(KEY) || "[]"); }catch(e){ return [];} }
-function savePerm(arr){ localStorage.setItem(KEY, JSON.stringify(arr)); }
-
-function readForm(){
-  const extras = $$("#extras .chip.active").map(c => c.dataset.x);
-  const hybrid = ($$("#hybridChips .chip.active")[0]?.dataset.h) || "none";
-  return {
-    id: Date.now(),
-    makeModel: $("#makeModel").value.trim(),
-    vin: $("#vin").value.trim(),
-    firstReg: $("#firstReg").value,
-    cc: +($("#cc").value||0),
-    euro: $("#euro").value,
-    co2: +($("#co2").value||0),
-    purchase: +($("#purchase").value||0),
-    km: +($("#km").value||0),
-    para: $("#para").value,
-    gear: $("#gear").value,
-    hybrid,
-    extras,
-    estCustoms: $("#estCustoms").value ? +$("#estCustoms").value : null,
-    lockedCustoms: $("#lockedCustoms").value ? +$("#lockedCustoms").value : null,
-    status: $("#lockedCustoms").value ? "locked" : "open",
-    notes: ""
-  };
-}
-
-function fillForm(v){
-  $("#makeModel").value = v.makeModel||"";
-  $("#vin").value = v.vin||"";
-  $("#firstReg").value = v.firstReg||"";
-  $("#cc").value = v.cc||"";
-  $("#euro").value = v.euro||"Euro 6";
-  $("#co2").value = v.co2||"";
-  $("#purchase").value = v.purchase||"";
-  $("#km").value = v.km||"";
-  $("#para").value = v.para||"yes";
-  $("#gear").value = v.gear||"Αυτόματο";
-  $("#estCustoms").value = v.estCustoms ?? "";
-  $("#lockedCustoms").value = v.lockedCustoms ?? "";
-  // extras
-  $$("#extras .chip").forEach(ch => ch.classList.toggle("active", v.extras?.includes(ch.dataset.x)));
-  // hybrid
-  $$("#hybridChips .chip").forEach(ch => ch.classList.toggle("active", ch.dataset.h === (v.hybrid||"none")));
-}
-
-function resetForm(){
-  fillForm({extras:[], hybrid:"none"});
-}
-
-function fmt(n){
-  if(n===null || n===undefined || isNaN(n)) return "—";
-  return new Intl.NumberFormat("el-GR").format(n) + " €";
-}
-
-function ageFactor(firstReg){
-  if(!firstReg) return 1.0;
-  const d = new Date(firstReg);
-  const now = new Date();
-  let years = (now - d) / (365.25*24*3600*1000);
-  if (years < 3) return 0.95;
-  if (years < 5) return 1.0;
-  if (years < 8) return 1.05;
-  return 1.1;
-}
-
-// Placeholder estimation (NO EFK) — purely demonstrative
-function estimateCustoms(v){
-  // Base depends on fuel/Euro/CO2; we don't track fuel explicitly, approximate by CO2 & Euro
-  let baseRate = 0.18; // baseline 18%
-  if (v.euro?.includes("6")) baseRate -= 0.01;
-  if (v.co2 > 150) baseRate += 0.03;
-  else if (v.co2 > 120) baseRate += 0.015;
-  // Extras bump (cap small)
-  let bump = Math.min(v.extras?.length || 0, 6) * 0.0025; // max +1.5%
-  // Paragraph 25a has no VAT, but customs estimation remains on retail pre-tax (unknown). Use purchase as proxy * uplift
-  const uplift = 1.35; // proxy to approximate retail pre-tax from trade 25a purchases
-  let est = (v.purchase * uplift) * (baseRate + bump) * ageFactor(v.firstReg);
-  // Hybrids: mild -50%, phev - if really applicable (but this is demo only)
-  if (v.hybrid === "mhev") est *= 0.5;
-  if (v.hybrid === "phev") est *= 0.75; // demo
-  // Round to nearest 50
-  return Math.round(est / 50) * 50;
-}
-
-// --- UI wiring ---
-$("#estimate").addEventListener("click", ()=>{
-  const v = readForm();
-  const est = estimateCustoms(v);
-  $("#estCustoms").value = est;
-});
-
-$("#savePerm").addEventListener("click", ()=>{
-  const v = readForm();
-  if(!v.makeModel || !v.vin){
-    alert("Συμπλήρωσε τουλάχιστον Μάρκα/Μοντέλο και VIN.");
-    return;
-  }
-  const arr = loadPerm();
-  arr.push(v);
-  savePerm(arr);
-  render();
-  alert("Αποθηκεύτηκε μόνιμα.");
-});
-
-$("#saveDraft").addEventListener("click", ()=>{
-  const v = readForm();
-  draft.push(v);
-  render();
-  alert("Αποθηκεύτηκε ως πρόχειρο (θα χαθεί όταν κλείσεις την εφαρμογή).");
-});
-
-$("#resetForm").addEventListener("click", resetForm);
-$("#addQuick").addEventListener("click", resetForm);
-
-// Toggle chips
-$$(".chips .chip").forEach(ch => {
-  ch.addEventListener("click", ()=>{
-    const group = ch.parentElement.id;
-    if(group === "hybridChips"){
-      // make it single-select
-      $$("#hybridChips .chip").forEach(c => c.classList.remove("active"));
-      ch.classList.add("active");
-    }else{
-      ch.classList.toggle("active");
+    function renderCars() {
+      const list = document.getElementById("car-list");
+      list.innerHTML = "";
+      cars.forEach((car, index) => {
+        const div = document.createElement("div");
+        div.className = "car-item";
+        div.innerHTML = `
+          <div class="car-header">
+            <strong>${car.model}</strong>
+            <div>
+              <button class="btn btn-edit" onclick="editCar(${index})">Επεξεργασία</button>
+              <button class="btn btn-delete" onclick="deleteCar(${index})">Διαγραφή</button>
+            </div>
+          </div>
+          <div>Κατάσταση: ${car.status}</div>
+          <div>${car.euro} — ${car.co2} — ${car.para}</div>
+          <div>VIN: ${car.vin}</div>
+          <div>Χιλιόμετρα: ${car.km}</div>
+          <div>Αγορά: ${car.price}</div>
+          <div>Τελωνείο: ${car.teloneio}</div>
+        `;
+        list.appendChild(div);
+      });
     }
-  });
-});
 
-// Tabs & search
-let activeTab = "all";
-$$(".tab").forEach(btn=>btn.addEventListener("click", ()=>{
-  $$(".tab").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
-  activeTab = btn.dataset.tab;
-  render();
-}));
-$("#search").addEventListener("input", render);
-
-function render(){
-  const arr = loadPerm();
-  const merged = [...arr.map(x=>({...x,_permanent:true})), ...draft.map(x=>({...x,_permanent:false}))];
-  const q = $("#search").value.trim().toLowerCase();
-
-  let list = merged.filter(x => {
-    if(activeTab==="open" && x.status!=="open") return false;
-    if(activeTab==="locked" && x.status!=="locked") return false;
-    if(q){
-      const hay = `${x.makeModel} ${x.vin} ${x.notes||""}`.toLowerCase();
-      if(!hay.includes(q)) return false;
+    function editCar(index) {
+      let newTeloneio = prompt("Δώσε νέο Τελωνείο (€):", cars[index].teloneio);
+      if (newTeloneio !== null && newTeloneio.trim() !== "") {
+        cars[index].teloneio = newTeloneio + " €";
+        renderCars();
+      }
     }
-    return true;
-  });
 
-  const el = $("#list");
-  el.innerHTML = "";
-  if(!list.length){
-    el.innerHTML = `<div class="item"><div>Δεν υπάρχουν καταχωρήσεις.</div></div>`;
-    return;
-  }
-  list.forEach(x=>{
-    const locked = (x.lockedCustoms!==null && x.lockedCustoms!==undefined && !isNaN(x.lockedCustoms));
-    const badge = locked ? `<span class="badge solid">Κλειδωμένο</span>` : `<span class="badge">Ανοιχτό</span>`;
-    const est = x.estCustoms!==null && x.estCustoms!==undefined ? fmt(x.estCustoms) : "—";
-    const lockTxt = locked ? fmt(x.lockedCustoms) : "—";
-    const extrasCount = x.extras?.length || 0;
+    function deleteCar(index) {
+      if (confirm("Να διαγραφεί το όχημα;")) {
+        cars.splice(index, 1);
+        renderCars();
+      }
+    }
 
-    const item = document.createElement("div");
-    item.className = "item";
-    item.innerHTML = `
-      <div>
-        <div class="row">
-          <strong>${x.makeModel||"—"}</strong>
-          ${badge}
-          <span class="badge">${x.euro||""}</span>
-          <span class="badge">${x.co2||0} g/km</span>
-          ${x.hybrid!=="none" ? `<span class="badge">${x.hybrid.toUpperCase()}</span>`:""}
-          ${x.para==="yes" ? `<span class="badge">25a</span>`:""}
-        </div>
-        <small class="muted">VIN: ${x.vin||"—"} &middot; ${x.km||0} km &middot; Αγορά: ${fmt(x.purchase||0)} &middot; Εξτρά: ${extrasCount}</small>
-      </div>
-      <div style="text-align:right">
-        <div>Τελωνείο (εκτίμηση): <strong>${est}</strong></div>
-        <div>Κλειδωμένο: <strong>${lockTxt}</strong></div>
-      </div>
-    `;
-    el.appendChild(item);
-  });
-}
-
-// Seed a couple of demo rows (only if empty)
-render();
-</script>
+    renderCars();
+  </script>
 </body>
 </html>
