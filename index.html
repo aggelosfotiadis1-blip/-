@@ -367,11 +367,7 @@ function render(){
 }
 
 // Seed a couple of demo rows (only if empty)
-if(loadPerm().length===0){
-  savePerm([
-    {id:1, makeModel:"BMW M440d xDrive Coupé", vin:"WBA1TEST123456789", firstReg:"2021-07-10", cc:2993, euro:"Euro 6", co2:139, purchase:49990, km:70000, para:"yes", gear:"Αυτόματο", hybrid:"mhev", extras:["navi","alloys","heated","park","hud","camera"], estCustoms:8500, lockedCustoms:null, status:"open"},
-    {id:2, makeModel:"Peugeot 3008 1.5 BlueHDi", vin:"VF3TEST9876543210", firstReg:"2021-05-05", cc:1499, euro:"Euro 6", co2:130, purchase:13000, km:67000, para:"yes", gear:"Αυτόματο", hybrid:"none", extras:["navi","alloys","park"], estCustoms:4200, lockedCustoms:4500, status:"locked"}
-  ]);
+
 }
 render();
 </script>
