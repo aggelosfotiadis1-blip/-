@@ -201,12 +201,6 @@ const CFG_DEFAULT={
 const loadCFG=()=>{ try{return JSON.parse(localStorage.getItem(CFG_KEY))||{...CFG_DEFAULT}}catch{return {...CFG_DEFAULT}} };
 const saveCFG=(v)=>localStorage.setItem(CFG_KEY, JSON.stringify(v));
 let CFG=loadCFG();
-  <!-- Κουμπιά για Import / Export -->
-<button id="cfgExport">Export CFG</button>
-<input type="file" id="cfgImport" style="display:none" />
-<button id="cfgImportBtn">Import CFG</button>
-
-<script>
 // ======= IMPORT / EXPORT CFG =======
 document.getElementById("cfgExport").onclick = () => {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(CFG, null, 2));
