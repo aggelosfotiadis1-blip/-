@@ -1,144 +1,501 @@
 <!doctype html>
 <html lang="el">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Center Car — Εκτελωνισμοί</title>
-  <style>
-    :root{
-      --bg:#0b1220; --panel:#0e1526; --card:#0f1a2f; --line:#1b2a45;
-      --ink:#e6edf6; --muted:#9db1cf; --blue:#3b82f6; --ok:#10b981; --danger:#ef4444;
-      --chip:#15203a; --chipOn:#1e3a8a;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--ink);
-      font:15px/1.5 -apple-system,system-ui,Segoe UI,Roboto,Inter,Arial}
-    header{position:sticky;top:0;z-index:20;background:#0a1020;
-      border-bottom:1px solid var(--line);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
-    h1{margin:0;font-size:18px}
-    .wrap{max-width:1100px;margin:0 auto;padding:16px}
-    .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
-    .row{display:grid;grid-template-columns:repeat(12,1fr);gap:10px}
-    .c12{grid-column:span 12}.c8{grid-column:span 8}.c6{grid-column:span 6}.c4{grid-column:span 4}.c3{grid-column:span 3}
-    @media(max-width:760px){.row{grid-template-columns:repeat(6,1fr)} .c8,.c6,.c4,.c3,.c12{grid-column:span 6}}
-    label{display:block;font-size:12px;color:var(--muted);margin:6px 0 6px}
-    input,select{width:100%;height:42px;border:1px solid var(--line);border-radius:10px;
-      background:#0d162b;color:var(--ink);padding:0 12px;font-size:15px}
-    input::placeholder{color:#7f93b2}
-    .chips{display:flex;flex-wrap:wrap;gap:8px}
-    .chip{background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:8px 12px;cursor:pointer;user-select:none}
-    .chip.on{background:var(--chipOn);border-color:transparent}
-    .btn{border:1px solid var(--line);background:#0d162b;color:var(--ink);border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:700}
-    .primary{background:var(--blue);border-color:var(--blue)}
-    .ok{background:var(--ok);border-color:var(--ok)}
-    .danger{background:var(--danger);border-color:var(--danger)}
-    .ghost{background:#0d162b}
-    .toolbar{display:flex;gap:8px;flex-wrap:wrap}
-    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-    .tab{border:1px solid var(--line);background:#0d162b;color:var(--ink);padding:8px 12px;border-radius:999px;cursor:pointer}
-    .tab.active{background:var(--blue);border-color:var(--blue)}
-    .list{display:flex;flex-direction:column;gap:12px}
-    .item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
-    .head{display:flex;gap:10px;justify-content:space-between;align-items:flex-start}
-    .title{font-weight:800;font-size:18px}
-    .badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-    .badge{border:1px solid var(--line);border-radius:999px;padding:4px 8px;font-size:12px;color:#9fb7da}
-    .muted{color:var(--muted);font-size:12px}
-    .sep{height:1px;background:var(--line);margin:10px 0}
-    .cfg{display:none;margin-bottom:12px}
-    .cfg.show{display:block}
-    .cfg .row input{background:#0d162b}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Center Car — Εκτελωνισμοί (Demo)</title>
+<style>
+:root{
+  --bg:#0b1220;--panel:#0e1526;--ink:#e6edf6;--muted:#9db1cf;
+  --line:#22304a;--chip:#15203a;--chipOn:#1e3a8a;
+  --blue:#2563eb;--ok:#16a34a;--danger:#dc2626;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial;
+}
+header{
+  position:sticky;top:0;z-index:5;background:var(--bg);
+  border-bottom:1px solid var(--line);
+}
+h1{margin:0;padding:14px 16px;font-size:18px;display:flex;justify-content:space-between;align-items:center}
+.wrap{max-width:1100px;margin:0 auto;padding:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px}
+.row{display:grid;grid-template-columns:repeat(12,1fr);gap:10px}
+.c12{grid-column:span 12}.c6{grid-column:span 6}.c4{grid-column:span 4}.c3{grid-column:span 3}
+@media (max-width:768px){.row{grid-template-columns:repeat(6,1fr)}.c6{grid-column:span 6}.c4{grid-column:span 6}.c3{grid-column:span 6}}
+label{display:block;font-size:12px;color:var(--muted);margin:6px 0}
+input,select{width:100%;height:42px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:#0d162b;color:var(--ink)}
+input::placeholder{color:#7f93b2}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:8px 12px;cursor:pointer;user-select:none}
+.chip.on{background:var(--chipOn)}
+.btn{border:1px solid var(--line);border-radius:10px;padding:10px 14px;cursor:pointer}
+.primary{background:var(--blue);border-color:transparent}
+.ok{background:var(--ok);border-color:transparent}
+.danger{background:var(--danger);border-color:transparent}
+.ghost{background:#0d162b}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap}
+.list{display:flex;flex-direction:column;gap:12px}
+.item{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}
+.item .title{font-weight:700;font-size:16px}
+.badge{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:2px 8px;margin-right:6px;margin-top:6px;color:var(--muted)}
+.muted{color:var(--muted)}
+.right{margin-left:auto}
+a.btn{color:#fff;text-decoration:none}
+#cfgPanel{display:none}
+#cfgPanel.show{display:block}
+#cfgPanel .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:600px){#cfgPanel .grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
+
 <header>
-  <h1>Center Car — Εκτελωνισμοί</h1>
-  <div class="toolbar">
-    <button id="cfgBtn" class="btn">CFG</button>
-  </div>
+  <h1>
+    <span>Center Car — Εκτελωνισμοί</span>
+    <button id="cfgBtn" class="btn ghost">CFG</button>
+  </h1>
 </header>
+
 <div class="wrap">
 
-  <!-- CFG Panel (ανοίγει με το κουμπί ή ?cfg=1) -->
-  <div class="card cfg" id="cfgPanel">
-    <div style="font-weight:700;margin-bottom:6px">Ρυθμίσεις Υπολογισμού (CFG)</div>
-    <div class="row">
-      <div class="c3"><label>Base % Euro 6</label><input id="cfg_e6" type="number" step="0.001"></div>
-      <div class="c3"><label>Base % Euro 5</label><input id="cfg_e5" type="number" step="0.001"></div>
-      <div class="c3"><label>Base % Euro 4</label><input id="cfg_e4" type="number" step="0.001"></div>
-      <div class="c3"><label>CO₂ κατώφλι</label><input id="cfg_floor" type="number"></div>
-      <div class="c3"><label>€/g πάνω από κατώφλι</label><input id="cfg_rate" type="number"></div>
-      <div class="c3"><label>MHEV factor</label><input id="cfg_mhev" type="number" step="0.01"></div>
-      <div class="c3"><label>PHEV factor</label><input id="cfg_phev" type="number" step="0.01"></div>
-      <div class="c3"><label>Fuel factor (Petrol)</label><input id="cfg_petrol" type="number" step="0.01"></div>
-      <div class="c3"><label>Fuel factor (Diesel)</label><input id="cfg_diesel" type="number" step="0.01"></div>
-      <div class="c3"><label>Μείωση/έτος</label><input id="cfg_age" type="number" step="0.01"></div>
-      <div class="c3"><label>Uplift (→ προ φόρων)</label><input id="cfg_uplift" type="number" step="0.01"></div>
-      <div class="c3"><label>Κατηγορία M1 factor</label><input id="cfg_m1" type="number" step="0.01"></div>
-      <div class="c3"><label>Κατηγορία N1 factor</label><input id="cfg_n1" type="number" step="0.01"></div>
-      <div class="c3"><label>Περιβαλλοντικό τέλος Euro 5 (€)</label><input id="cfg_env5" type="number" step="1"></div>
+  <!-- ΠΑΝΕΛ CFG -->
+  <div id="cfgPanel" class="card">
+    <div class="toolbar" style="justify-content:space-between;align-items:center">
+      <strong>Ρυθμίσεις Υπολογισμού (CFG)</strong>
+      <div class="toolbar">
+        <button id="cfgExport" class="btn ghost">Export CFG</button>
+        <input id="cfgImport" type="file" accept="application/json" style="display:none" />
+        <button id="cfgImportBtn" class="btn ghost">Import CFG</button>
+        <button id="cfgBack" class="btn">Κλείσιμο</button>
+      </div>
     </div>
-    <div class="toolbar" style="margin-top:8px">
+
+    <div class="grid" style="margin-top:10px">
+      <div>
+        <label>Βασικό % (Euro 6)</label>
+        <input id="cfg_e6" type="number" step="0.001" />
+      </div>
+      <div>
+        <label>Βασικό % (Euro 5)</label>
+        <input id="cfg_e5" type="number" step="0.001" />
+      </div>
+      <div>
+        <label>Βασικό % (Euro 4)</label>
+        <input id="cfg_e4" type="number" step="0.001" />
+      </div>
+      <div>
+        <label>Κατώφλι CO₂ (g/km)</label>
+        <input id="cfg_floor" type="number" />
+      </div>
+      <div>
+        <label>€ ανά g/km πάνω από κατώφλι</label>
+        <input id="cfg_rate" type="number" />
+      </div>
+      <div>
+        <label>Συντ. Mild Hybrid</label>
+        <input id="cfg_mhev" type="number" step="0.01" />
+      </div>
+      <div>
+        <label>Συντ. Plug-in Hybrid</label>
+        <input id="cfg_phev" type="number" step="0.01" />
+      </div>
+      <div>
+        <label>Συντ. Βενζίνη</label>
+        <input id="cfg_petrol" type="number" step="0.01" />
+      </div>
+      <div>
+        <label>Συντ. Πετρέλαιο</label>
+        <input id="cfg_diesel" type="number" step="0.01" />
+      </div>
+      <div>
+        <label>Συντ. M1</label>
+        <input id="cfg_m1" type="number" step="0.01" />
+      </div>
+      <div>
+        <label>Συντ. N1</label>
+        <input id="cfg_n1" type="number" step="0.01" />
+      </div>
+      <div>
+        <label>Περιβαλλοντικό τέλος Euro 5 (Ν1)</label>
+        <input id="cfg_env5" type="number" step="1" />
+      </div>
+      <div>
+        <label>Ετήσια απόσβεση (συντ.)</label>
+        <input id="cfg_age" type="number" step="0.01" />
+      </div>
+      <div>
+        <label>Uplift (συντ.)</label>
+        <input id="cfg_uplift" type="number" step="0.01" />
+      </div>
+    </div>
+
+    <div class="toolbar" style="margin-top:12px">
+      <button id="cfgReset" class="btn danger">Επαναφορά Προεπιλογών</button>
+      <div class="right"></div>
       <button id="cfgSave" class="btn ok">Αποθήκευση CFG</button>
-      <button id="cfgReset" class="btn">Επαναφορά</button>
-      <button id="cfgBack" class="btn">Πίσω</button>
-      <span class="muted">Μόνο τελωνείο (χωρίς ΕΦΚ/ΦΠΑ/150€ εκτελωνιστή).</span>
     </div>
   </div>
 
-  <!-- Tabs + αναζήτηση + export -->
-  <div class="toolbar" style="justify-content:space-between;margin-bottom:10px">
-    <div class="tabs">
-      <button class="tab active" data-tab="all">Όλα</button>
-      <button class="tab" data-tab="open">Ανοιχτά</button>
-      <button class="tab" data-tab="locked">Κλειδωμένα</button>
-    </div>
-    <div class="toolbar">
-      <input id="search" placeholder="Αναζήτηση (Μοντέλο / VIN)" style="max-width:300px">
-      <button id="exportLocked" class="btn">Export Golden Cases</button>
-      <button id="openCfg" class="btn">CFG</button>
-    </div>
-  </div>
-
-  <!-- Φόρμα -->
-  <div class="card" id="formCard">
+  <!-- ΦΟΡΜΑ -->
+  <div class="card">
     <div class="row">
-      <div class="c6"><label>Μάρκα/Μοντέλο</label><input id="makeModel" placeholder="π.χ. BMW M440d xDrive Coupé"></div>
-      <div class="c6"><label>VIN</label><input id="vin" placeholder="π.χ. WBA..."></div>
+      <div class="c6">
+        <label>Μάρκα/Μοντέλο</label>
+        <input id="makeModel" placeholder="π.χ. BMW 320d" />
+      </div>
+      <div class="c3">
+        <label>CO₂ (WLTP)</label>
+        <input id="co2" type="number" placeholder="π.χ. 129" />
+      </div>
+      <div class="c3">
+        <label>Κυβικά (cc)</label>
+        <input id="cc" type="number" placeholder="π.χ. 1499" />
+      </div>
 
-      <div class="c3"><label>Euro</label><select id="euro"><option>Euro 6</option><option>Euro 5</option><option>Euro 4</option></select></div>
-      <div class="c3"><label>CO₂ (V7)</label><input id="co2" type="number" placeholder="π.χ. 139"></div>
-      <div class="c3"><label>Κυβικά (cc)</label><input id="cc" type="number" placeholder="π.χ. 1995"></div>
-      <div class="c3"><label>Χιλιόμετρα</label><input id="km" type="number" placeholder="π.χ. 70000"></div>
+      <div class="c4">
+        <label>Χιλιόμετρα</label>
+        <input id="km" type="number" placeholder="π.χ. 70000" />
+      </div>
+      <div class="c4">
+        <label>Τιμή Τιμολογίου (€)</label>
+        <input id="purchase" type="number" placeholder="π.χ. 49990" />
+      </div>
+      <div class="c4">
+        <label>Λιανική προ Φόρων (προαιρετικό)</label>
+        <input id="pretax" placeholder="αν τη ξέρεις, βάλ’ τη εδώ" />
+      </div>
 
-      <div class="c4"><label>Τιμή Τιμολογίου (€)</label><input id="purchase" type="number" inputmode="decimal" placeholder="π.χ. 49990"></div>
-      <div class="c4"><label>Λιανική προ Φόρων (προαιρετικό)</label><input id="pretax" type="number" inputmode="decimal" placeholder="αν τη ξέρεις, βάλ’ τη εδώ"></div>
-      <div class="c4"><label>Παράγραφος 25a</label><select id="para"><option value="yes">Ναι (χωρίς ΦΠΑ)</option><option value="no">Όχι</option></select></div>
+      <div class="c4">
+        <label>Παράγραφος 25α</label>
+        <select id="para">
+          <option value="yes">Ναι (χωρίς ΦΠΑ)</option>
+          <option value="no">Όχι (με ΦΠΑ)</option>
+        </select>
+      </div>
 
-      <div class="c6"><label>Ημερομηνία Παραγωγής</label><input id="prodDate" type="date"></div>
-      <div class="c6"><label>Κατηγορία Οχήματος</label>
-        <div id="catChips" class="chips">
-          <div class="chip on" data-cat="M1">M1 (επιβατικό)</div>
-          <div class="chip" data-cat="N1">N1 (επαγγελματικό)</div>
+      <div class="c4">
+        <label>Ημερομηνία Παραγωγής</label>
+        <input id="prodDate" type="date" />
+      </div>
+
+      <div class="c4">
+        <label>Κατηγορία Οχήματος</label>
+        <div class="chips" id="catChips">
+          <div class="chip on" data-val="M1">M1 (επιβατικό)</div>
+          <div class="chip" data-val="N1">N1 (επαγγελματικό)</div>
         </div>
       </div>
 
-      <div class="c12">
+      <div class="c6">
         <label>Καύσιμο</label>
-        <div id="fuelChips" class="chips">
-          <div class="chip on" data-fuel="petrol">Βενζίνη</div>
-          <div class="chip" data-fuel="diesel">Πετρέλαιο</div>
+        <div class="chips" id="fuelChips">
+          <div class="chip on" data-val="petrol">Βενζίνη</div>
+          <div class="chip" data-val="diesel">Πετρέλαιο</div>
         </div>
       </div>
 
-      <div class="c12">
+      <div class="c6">
         <label>Υβριδισμός</label>
-        <div id="hybridChips" class="chips">
-          <div class="chip" data-h="mhev">Mild Hybrid</div>
-          <div class="chip" data-h="phev">Plug-in Hybrid</div>
-          <!-- δεν πατάς τίποτα = none -->
+        <div class="chips" id="hybridChips">
+          <div class="chip on" data-val="none">—</div>
+          <div class="chip" data-val="mhev">Mild Hybrid</div>
+          <div class="chip" data-val="phev">Plug-in Hybrid</div>
         </div>
       </div>
 
       <div class="c12">
-        <label>Εξοπλισμός</
+        <label>Euro / Ρύθμιση</label>
+        <div class="chips" id="euroChips">
+          <div class="chip" data-val="Euro 4">Euro 4</div>
+          <div class="chip" data-val="Euro 5">Euro 5</div>
+          <div class="chip on" data-val="Euro 6">Euro 6</div>
+        </div>
+      </div>
+
+      <div class="c12">
+        <label>Εξοπλισμός</label>
+        <div class="chips" id="extras">
+          <div class="chip" data-val="auto">Αυτόματο</div>
+          <div class="chip" data-val="heated">Θερμαινόμενα</div>
+          <div class="chip" data-val="fog">Προβολάκια</div>
+          <div class="chip" data-val="navi">Navi</div>
+          <div class="chip" data-val="park">Parktronic</div>
+          <div class="chip" data-val="leather">Δερμάτινα</div>
+          <div class="chip" data-val="roof">Οροφή</div>
+          <div class="chip" data-val="rims">Ζάντες</div>
+          <div class="chip" data-val="metal">Μεταλλικό</div>
+          <div class="chip" data-val="rain">Αισθητήρες Βροχής</div>
+          <div class="chip" data-val="cruise">Cruise Control</div>
+          <div class="chip" data-val="hud">Head-Up Display</div>
+          <div class="chip" data-val="cam">Κάμερα Οπισθοπορείας</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar" style="margin-top:10px">
+      <button id="calc" class="btn primary">Υπολόγισε</button>
+      <button id="savePerm" class="btn ok">Αποθήκευση (Μόνιμα)</button>
+      <button id="saveDraft" class="btn">Πρόχειρο</button>
+      <div class="right muted" id="calcInfo"></div>
+    </div>
+  </div>
+
+  <!-- ΛΙΣΤΑ -->
+  <div id="list" class="list"></div>
+
+</div>
+
+<script>
+/* ===== helpers for chips ===== */
+const $ = s=>document.querySelector(s);
+function bindSingleChip(container){
+  const el = $(container); if(!el) return;
+  el.querySelectorAll('.chip').forEach(ch=>{
+    ch.addEventListener('click', ()=>{
+      const on = ch.classList.contains('on');
+      el.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));
+      if(!on) ch.classList.add('on');
+    });
+  });
+}
+function bindMultiChips(container){
+  const el = $(container); if(!el) return;
+  el.querySelectorAll('.chip').forEach(ch=>{
+    ch.addEventListener('click', ()=>ch.classList.toggle('on'));
+  });
+}
+bindSingleChip('#catChips');
+bindSingleChip('#fuelChips');
+bindSingleChip('#hybridChips');
+bindSingleChip('#euroChips');
+bindMultiChips('#extras');
+
+/* ====== CFG (ρυθμίσεις) ====== */
+const CFG_KEY='cc_cfg_v3';
+const CFG_DEFAULT={
+  basePct:{'Euro 6':0.160,'Euro 5':0.180,'Euro 4':0.210},
+  co2Floor:120, co2Rate:5,
+  hybrid:{none:1.00,mhev:0.85,phev:0.65},
+  fuel:{petrol:1.00,diesel:1.06},
+  category:{M1:1.00,N1:1.00},
+  agePerYear:0.00,
+  uplift:1.35,
+  envFeeEuro5:1000
+};
+const loadCFG = ()=>{ try{ return JSON.parse(localStorage.getItem(CFG_KEY))||CFG_DEFAULT }catch(e){return CFG_DEFAULT}};
+const saveCFG = v => localStorage.setItem(CFG_KEY,JSON.stringify(v));
+let CFG = loadCFG();
+
+document.getElementById('cfgBtn').onclick = ()=>toggleCfg();
+document.getElementById('cfgBack').onclick = ()=>toggleCfg(false);
+document.getElementById('cfgExport').onclick = ()=>{
+  const blob = new Blob([JSON.stringify(CFG,null,2)],{type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='cfg.json'; a.click();
+  URL.revokeObjectURL(url);
+};
+document.getElementById('cfgImportBtn').onclick = ()=>document.getElementById('cfgImport').click();
+document.getElementById('cfgImport').addEventListener('change', e=>{
+  const file = e.target.files && e.target.files[0]; if(!file){alert('Δεν διάλεξες αρχείο');return}
+  const reader = new FileReader();
+  reader.onload = ev=>{
+    try{
+      const data = JSON.parse(ev.target.result);
+      CFG = {...CFG, ...data};
+      saveCFG(CFG);
+      alert('Το CFG έγινε εισαγωγή'); location.reload();
+    }catch(err){ alert('Λάθος αρχείο CFG') }
+  };
+  reader.readAsText(file);
+});
+
+function fillCfgInputs(){
+  $('#cfg_e6').value=CFG.basePct['Euro 6'];
+  $('#cfg_e5').value=CFG.basePct['Euro 5'];
+  $('#cfg_e4').value=CFG.basePct['Euro 4'];
+  $('#cfg_floor').value=CFG.co2Floor;
+  $('#cfg_rate').value=CFG.co2Rate;
+  $('#cfg_mhev').value=CFG.hybrid.mhev;
+  $('#cfg_phev').value=CFG.hybrid.phev;
+  $('#cfg_age').value=CFG.agePerYear;
+  $('#cfg_petrol').value=CFG.fuel.petrol;
+  $('#cfg_diesel').value=CFG.fuel.diesel;
+  $('#cfg_m1').value=CFG.category.M1;
+  $('#cfg_n1').value=CFG.category.N1;
+  $('#cfg_env5').value=CFG.envFeeEuro5;
+  $('#cfg_uplift').value=CFG.uplift;
+}
+document.getElementById('cfgSave').onclick = ()=>{
+  CFG={
+    basePct:{
+      'Euro 6': +$('#cfg_e6').value || 0,
+      'Euro 5': +$('#cfg_e5').value || 0,
+      'Euro 4': +$('#cfg_e4').value || 0
+    },
+    co2Floor:+$('#cfg_floor').value||0,
+    co2Rate:+$('#cfg_rate').value||0,
+    hybrid:{ none:1.00, mhev:+$('#cfg_mhev').value||1, phev:+$('#cfg_phev').value||1 },
+    fuel:{ petrol:+$('#cfg_petrol').value||1, diesel:+$('#cfg_diesel').value||1 },
+    category:{ M1:+$('#cfg_m1').value||1, N1:+$('#cfg_n1').value||1 },
+    agePerYear:+$('#cfg_age').value||0,
+    uplift:+$('#cfg_uplift').value||1,
+    envFeeEuro5:+$('#cfg_env5').value||0
+  };
+  saveCFG(CFG); alert('Αποθηκεύτηκε το CFG.');
+};
+document.getElementById('cfgReset').onclick = ()=>{
+  CFG={...CFG_DEFAULT}; saveCFG(CFG); alert('Επαναφορά προεπιλογών'); location.reload();
+};
+
+function toggleCfg(force){
+  const p = document.getElementById('cfgPanel');
+  const on = force===undefined ? !p.classList.contains('show') : force;
+  if(on){ fillCfgInputs(); }
+  p.classList.toggle('show', on);
+}
+
+/* ====== Υπολογισμός ====== */
+function selected(container){ const on=document.querySelector(container+' .chip.on'); return on?on.dataset.val:null }
+function selectedMany(container){ return Array.from(document.querySelectorAll(container+' .chip.on')).map(x=>x.dataset.val) }
+
+function estimateCustoms(inputs){
+  const euro = inputs.euro||'Euro 6';
+  const basePct = CFG.basePct[euro] ?? 0.16;
+  const base = (inputs.pretax ? +inputs.pretax : +inputs.purchase) * basePct;
+
+  let co2Fee = 0;
+  if(+inputs.co2 > CFG.co2Floor){
+    co2Fee = (+inputs.co2 - CFG.co2Floor) * CFG.co2Rate;
+  }
+
+  // modifiers
+  const fuelK = CFG.fuel[inputs.fuel] ?? 1;
+  const hybK  = CFG.hybrid[inputs.hybrid] ?? 1;
+  const catK  = CFG.category[inputs.category] ?? 1;
+
+  // ηλικία (προαιρετικό – εδώ δεν αφαιρούμε κάτι, αλλά κρατάω τον συντελεστή για μελλοντικά)
+  let ageK = 1;
+  if(inputs.prodDate){
+    // μπορείς να εφαρμόσεις ό,τι λογική θέλεις αργότερα
+    ageK = 1; // placeholder
+  }
+
+  let envFee = 0;
+  if(inputs.category==='N1' && euro==='Euro 5'){ envFee = CFG.envFeeEuro5 }
+
+  const subtotal = (base + co2Fee) * fuelK * hybK * catK * ageK;
+  const total = Math.round(subtotal * CFG.uplift + envFee);
+  return {base, co2Fee, envFee, total};
+}
+
+function readForm(){
+  return {
+    id: Date.now(),
+    makeModel: $('#makeModel').value.trim(),
+    co2:+$('#co2').value||0,
+    cc:+$('#cc').value||0,
+    km:+$('#km').value||0,
+    purchase:+$('#purchase').value||0,
+    pretax: $('#pretax').value.trim(),
+    para: $('#para').value,
+    prodDate: $('#prodDate').value,
+    category: selected('#catChips')||'M1',
+    fuel: selected('#fuelChips')||'petrol',
+    hybrid: selected('#hybridChips')||'none',
+    euro: selected('#euroChips')||'Euro 6',
+    extras: selectedMany('#extras'),
+    locked:false,
+    lockedCustoms:null
+  };
+}
+
+/* ====== Αποθήκευση (localStorage) ====== */
+const KEY_PERM='cc_customs_perm_v3';
+const loadPerm = ()=>{ try{return JSON.parse(localStorage.getItem(KEY_PERM))||[]}catch(_){return[]} };
+const savePerm = arr => localStorage.setItem(KEY_PERM,JSON.stringify(arr));
+
+let draft=[]; let editCtx=null;
+
+function render(){
+  const host = document.getElementById('list');
+  const data = loadPerm();
+  host.innerHTML='';
+  if(!data.length){ const c=document.createElement('div'); c.className='card muted'; c.textContent='Δεν υπάρχουν καταχωρήσεις.'; host.appendChild(c); return; }
+  data.forEach(x=>{
+    const locked = (x.locked===true || x.lockedCustoms!=null);
+    const item=document.createElement('div'); item.className='item';
+    const hybridBadge = x.hybrid!=='none' ? `<span class="badge">${x.hybrid==='mhev'?'MHEV':'PHEV'}</span>` : '';
+    const euroBadge = `<span class="badge">${x.euro||''}</span>`;
+    const co2Badge = `<span class="badge">${x.co2||0} g/km</span>`;
+    const fuelBadge = `<span class="badge">${x.fuel==='petrol'?'Petrol':'Diesel'}</span>`;
+    const catBadge = `<span class="badge">${x.category||'M1'}</span>`;
+    item.innerHTML = `
+      <div class="title">${x.makeModel||'Καταχώρηση'}</div>
+      ${euroBadge}${co2Badge}${fuelBadge}${hybridBadge}${catBadge}
+      <div class="muted">VIN: ${x.vin||'—'} | km: ${x.km||0} | Αγορά: ${x.purchase||0} €</div>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="btn" data-edit="${x.id}">Επεξεργασία</button>
+        <button class="btn danger" data-del="${x.id}">Διαγραφή</button>
+        <div class="right"><strong>Τελωνείο:</strong> ${(x.lockedCustoms||x.estCustoms||0).toLocaleString('el-GR')} € ${locked?'(κλειδωμένο)':'(εκτίμηση)'}</div>
+      </div>
+    `;
+    host.appendChild(item);
+  });
+
+  // bind edit/delete
+  host.querySelectorAll('[data-edit]').forEach(b=>{
+    b.onclick=()=>{ const id=+b.dataset.edit; const arr=loadPerm(); const row=arr.find(r=>r.id===id); if(!row) return;
+      // φορτώνω τα πεδία
+      $('#makeModel').value=row.makeModel||''; $('#co2').value=row.co2||''; $('#cc').value=row.cc||''; $('#km').value=row.km||'';
+      $('#purchase').value=row.purchase||''; $('#pretax').value=row.pretax||''; $('#para').value=row.para||'yes'; $('#prodDate').value=row.prodDate||'';
+      // chips
+      ['#catChips','#fuelChips','#hybridChips','#euroChips','#extras'].forEach(sel=>{
+        document.querySelectorAll(sel+' .chip').forEach(x=>x.classList.remove('on'));
+      });
+      const selOn=(sel,val)=>{ const c=[...document.querySelectorAll(sel+' .chip')].find(x=>x.dataset.val===val); if(c) c.classList.add('on'); };
+      selOn('#catChips',row.category||'M1'); selOn('#fuelChips',row.fuel||'petrol'); selOn('#hybridChips',row.hybrid||'none'); selOn('#euroChips',row.euro||'Euro 6');
+      (row.extras||[]).forEach(v=>{ const c=[...document.querySelectorAll('#extras .chip')].find(x=>x.dataset.val===v); if(c) c.classList.add('on'); });
+      editCtx={id:row.id};
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+  });
+  host.querySelectorAll('[data-del]').forEach(b=>{
+    b.onclick=()=>{ const id=+b.dataset.del; let arr=loadPerm().filter(r=>r.id!==id); savePerm(arr); render(); }
+  });
+}
+
+/* ====== κουμπιά ====== */
+document.getElementById('calc').onclick = ()=>{
+  const f = readForm();
+  const est = estimateCustoms(f);
+  f.estCustoms = est.total;
+  document.getElementById('calcInfo').textContent = `Εκτίμηση: ${est.total.toLocaleString('el-GR')} €`;
+};
+
+document.getElementById('saveDraft').onclick = ()=>{
+  const f = readForm(); f.permanent=false;
+  draft=[f]; document.getElementById('calcInfo').textContent='Αποθηκεύτηκε πρόχειρο.';
+};
+
+document.getElementById('savePerm').onclick = ()=>{
+  const f = readForm(); f.permanent=true;
+  const est = estimateCustoms(f); f.estCustoms=est.total;
+  let arr = loadPerm();
+  if(editCtx){ // update
+    const i = arr.findIndex(r=>r.id===editCtx.id);
+    if(i>-1){ f.id=editCtx.id; arr[i]=f; editCtx=null; }
+  }else{
+    arr.push(f);
+  }
+  savePerm(arr); render();
+};
+
+/* ====== start ====== */
+render();
+</script>
+</body>
+</html>
