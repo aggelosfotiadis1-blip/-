@@ -201,6 +201,43 @@ const CFG_DEFAULT={
 const loadCFG=()=>{ try{return JSON.parse(localStorage.getItem(CFG_KEY))||{...CFG_DEFAULT}}catch{return {...CFG_DEFAULT}} };
 const saveCFG=(v)=>localStorage.setItem(CFG_KEY, JSON.stringify(v));
 let CFG=loadCFG();
+  <!-- Κουμπιά για Import / Export -->
+<button id="cfgExport">Export CFG</button>
+<input type="file" id="cfgImport" style="display:none" />
+<button id="cfgImportBtn">Import CFG</button>
+
+<script>
+// ======= IMPORT / EXPORT CFG =======
+document.getElementById("cfgExport").onclick = () => {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(CFG, null, 2));
+    const dl = document.createElement("a");
+    dl.setAttribute("href", dataStr);
+    dl.setAttribute("download", "cfg.json");
+    dl.click();
+};
+
+document.getElementById("cfgImportBtn").onclick = () => {
+    document.getElementById("cfgImport").click();
+};
+
+document.getElementById("cfgImport").onchange = (evt) => {
+    const file = evt.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        try {
+            const newCfg = JSON.parse(e.target.result);
+            CFG = newCfg;
+            saveCFG(CFG);
+            alert("Το CFG έγινε import με επιτυχία!");
+            location.reload(); // κάνε refresh για να φορτώσει
+        } catch(err) {
+            alert("Λάθος αρχείο CFG!");
+        }
+    };
+    reader.readAsText(file);
+};
+</script>
 
 document.getElementById('cfgBtn').onclick = toggleCfg;
 const openCfgBtn = document.getElementById('openCfg');
